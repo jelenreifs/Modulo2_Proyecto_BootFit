@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>BootFitness</title>
+</head>
+
+<body>
+    <header>
+        <nav role="navigation">
+            <div id="menuToggle">
+
+                <input class="menuLateral" type="checkbox" />
+
+                <!-- Hamburguer -->
+                <div id="hamburguer">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <!-- FIN Hamburguer -->
+
+
+                <ul id="menu">
+                    <li class="menu-section inline">
+                        <input type="text" id="name" placeholder="Usuario">
+                        <button id="search-usuario" onclic="searchUser">
+                            <i class="fas fa-search"></i></button>
+                    </li>
+                    <li class="menu-section column">
+                        <select name="" id="">
+                            <option value="">Actividad</option>
+                            <option value="">Caminar</option>
+                            <option value="">Ciclismo</option>
+                            <option value="">Musculacion</option>
+                            <option value="">Natación</option>
+                        </select>
+                        <select name="" id="">
+                            <option value="">Intensidad</option>
+                            <option value="">Intensivo</option>
+                            <option value="">Moderado</option>
+                            <option value="">ligero</option>
+                        </select>
+                        <button id="search-usuario" onclic="searchUser">Iniciar</button>
+                    </li>
+                    <li class="menu-section column">
+                        <div class="inline">
+                            <input class="fecha" type="text" placeholder="Hora comienzo">
+                            <input type="text" placeholder="Hora fin">
+                        </div>
+                        <button id="search-usuario" onclic="searchUser">Registrar</button>
+                    </li>
+
+
+                </ul>
+            </div>
+        </nav>
+
+
+
+        </div>
+    </header>
+
+    <main>
+        <div class="content-wrapper">
+            <header>
+                <ul class="menu-content">
+                    <li><a class="menu-content-item" href="index.html">VOLVER</a></li>
+                    <li><a class="menu-content-item" href="#">Entrenamientos</a></li>
+
+                    <!-- <li></li> -->
+                </ul>
+            </header>
+
+            <section class="section-detalle">
+                <div class="detalle-list">
+                    <div class="detalle-list-item">
+                        <div id="tiempo">
+                            <i class="far fa-image"></i>
+                            <p>1h 21min</p>
+                        </div>
+                        <div id="kilometros">
+                            <i class="far fa-image"></i>
+                            <p>4.92 km</p>
+                        </div>
+                        <div id="pasos">
+                            <i class="far fa-image"></i>
+                            <p>765 pasos</p>
+                        </div>
+                    </div>
+                </div>
+
+    </main>
+
+
+
+
+    <script src="./index.js"></script>
+</body>
+
+</html>
