@@ -2,6 +2,35 @@ const express = require("express");
 const router = express.Router()
 
 
+/* AÑADIR USUARIO A LA COLECCIÓN */
+/* router.post("/registro", (req, res) => {
+const userRegistrado = {
+    tfno: req.body.tfno,
+    password: req.body.password,   
+}   */
+    
+ /*    let db = req.app.locals.db;
+    db.collection("users")
+        .find({ tfno: userRegistrsdo.tfno })
+        .toArray((err, datos) => {
+            if(err!=null) {
+                res.send(err);
+            } else {
+    .insertOne(userRegistrado, (err, datos) => {
+        if (err != null) {
+            console.log(err);
+            res.send(err);
+        } else {
+            console.log(datos);
+            res.send(datos);
+        }
+    });
+}); */
+
+
+
+
+
 /* TODA LA COLECCIÓN DE USUARIOS */
 router.get("/", (req, res) => {
     let db = req.app.locals.db;
@@ -15,6 +44,25 @@ router.get("/", (req, res) => {
         }
     });
 }); 
+    
+
+
+/* BUSCAR UN USUARIO */
+/* router.get("/login", (req, res) => {
+    const tfno = req.body.tfno;
+        
+    let db = req.app.locals.db;
+    db.collection("users")
+        .find({ tfno: tfno})
+        .toArray((err, datos) => {
+        if(err!=null) {
+            res.send(err);
+        } else {
+            res.send(datos);
+        }
+    });
+}); 
+ */
 
 
 

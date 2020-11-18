@@ -26,8 +26,6 @@ MongoClient.connect("mongodb://127.0.0.1:27017", function (err, client) {
 
 
 
-
-
 app.use("/users", users);
 app.use("/activities", activities);
 app.use("/dreams", dreams);

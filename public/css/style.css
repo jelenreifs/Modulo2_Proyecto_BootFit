@@ -8,6 +8,15 @@ body {
   font-family: 'Ubuntu', sans-serif;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  margin-bottom: 0.65em;
+}
+
 /* Generales */
 .inline {
   display: flex;
@@ -144,12 +153,30 @@ input:focus:invalid {
 
 input[class~="fecha"] {
   flex-grow: 0;
-  width: 30%;
 }
 
 input,
 select {
   flex-grow: 1;
+}
+
+label {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 0.5em;
+  color: #d33f8d;
+  font-size: 0.65em;
+}
+
+.section-actividades,
+.section-dormir {
+  border: 1px solid #ccc;
+  padding: 0.65em 1em !important;
+}
+
+.date-wrapper {
+  display: flex;
+  justify-content: space-between;
 }
 
 /* Botones */
@@ -195,17 +222,13 @@ main {
   display: flex;
   background-color: #111111;
   border: 1px solid #333;
-  padding: 1em;
+  /*  padding: 0.4em 1em 1em; */
   border-radius: 10px;
   margin-bottom: 1em;
 }
 
-.resumen-actividad-grafico {
-  width: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #999;
+.resumen-actividad {
+  max-height: 200px;
 }
 
 .resumen-actividad-grafico {
@@ -213,13 +236,13 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #999;
 }
 
 .resumen-pasos,
 .resumen-sueño {
   display: flex;
   flex-direction: column;
+  height: 222px;
 }
 
 .resumen-pasos-grafico,
@@ -228,14 +251,16 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #999;
   height: 14em;
 }
 
 .resumen-pasos-datos,
 .resumen-sueño-datos {
   display: flex;
-  padding: 1em 0 0;
+  padding: 0;
+  position: absolute;
+  bottom: 12px;
+  left: 28px;
 }
 
 .resumen-pasos-datos p,
@@ -264,4 +289,91 @@ main {
 
 .detalle-list-item div p {
   margin-top: 0.5em;
+}
+
+/* LOGIN */
+
+.login {
+  width: 100vw;
+  height: 100vh;
+  min-height: 400px;
+  background: #333;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.login  button,
+.login  input {
+  height: 46px;
+  line-height: 1;
+  font-size: 16px;
+  border-radius: 3px;
+  border: none;
+  box-sizing: border-box;
+  padding: 10px;
+  width: 80%;
+}
+
+.login input {
+  max-height: 4em;
+}
+
+.login button {
+  width: 80%;
+  max-width: 300px;
+  color: white;
+  margin-top: 1em;
+}
+
+.login button:hover {
+  background: #000;
+}
+
+.logo {
+  margin-bottom: 1em;
+  width: 80%;
+}
+
+/* GRAFICOS */
+.apexcharts-datalabel-label {
+  position: relative;
+  top: -10px;
+}
+
+.apexcharts-datalabel-value {
+  font-size: 35px !important;
+}
+
+.apexcharts-toolbar,
+.apexcharts-yaxis-texts-g {
+  display: none !important;
+}
+
+.resumen-actividad-grafico .apexcharts-svg {
+  position: absolute;
+  left: 10px;
+  top: -2px;
+}
+
+.apexcharts-svg {
+  position: absolute;
+  left: -22px;
+  top: -35px;
+}
+
+.resumen-actividad .apexcharts-svg {
+  position: absolute;
+  left: 10px;
+  top: -10px;
+}
+
+.apexcharts-canvas {
+  overflow: hidden;
+}
+
+.apexchartspfbasdrh {
+  width: 60%;
 }
