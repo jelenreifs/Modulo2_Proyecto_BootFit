@@ -2,35 +2,6 @@ const express = require("express");
 const router = express.Router()
 
 
-/* AÑADIR USUARIO A LA COLECCIÓN */
-/* router.post("/registro", (req, res) => {
-const userRegistrado = {
-    tfno: req.body.tfno,
-    password: req.body.password,   
-}   */
-    
- /*    let db = req.app.locals.db;
-    db.collection("users")
-        .find({ tfno: userRegistrsdo.tfno })
-        .toArray((err, datos) => {
-            if(err!=null) {
-                res.send(err);
-            } else {
-    .insertOne(userRegistrado, (err, datos) => {
-        if (err != null) {
-            console.log(err);
-            res.send(err);
-        } else {
-            console.log(datos);
-            res.send(datos);
-        }
-    });
-}); */
-
-
-
-
-
 /* TODA LA COLECCIÓN DE USUARIOS */
 router.get("/", (req, res) => {
     let db = req.app.locals.db;
@@ -44,25 +15,6 @@ router.get("/", (req, res) => {
         }
     });
 }); 
-    
-
-
-/* BUSCAR UN USUARIO */
-/* router.get("/login", (req, res) => {
-    const tfno = req.body.tfno;
-        
-    let db = req.app.locals.db;
-    db.collection("users")
-        .find({ tfno: tfno})
-        .toArray((err, datos) => {
-        if(err!=null) {
-            res.send(err);
-        } else {
-            res.send(datos);
-        }
-    });
-}); 
- */
 
 
 
@@ -88,6 +40,59 @@ const user = {
         }
     });
 });
+
+
+
+/* AÑADIR USUARIO AL REGISTRO */
+router.post("/registro", function(req, res) {
+    let tfno = req.body.tfno;
+    let password = req.body.password;
+    let contraseinaCifrada = bcrypt.hashSync( password, 10 );
+
+    let db = req.app.locals.db;
+    db.collection("users")
+        .insertOne({
+            tfno: tfno,
+            password: contraseinaCifrada
+        }, function (err, result) {
+     if(err !== null){
+       res.send({mensaje: "Error al registrar el usuario"} )
+     }else{
+       res.send({mensaje: "Usuario registrado correctamente"})
+     }
+   })
+})
+
+
+
+/* PARA EL LOGIN */
+router.post("/login", function (req, res) {
+    let tfno = req.body.tfno;
+    let password = req.body.password;
+
+    let db = req.app.locals.db;
+  db.collection("users")
+    .find({ tfno: tfno })
+    .toArray(function (err, arrayUsuario) {
+      if (err !== null) {
+        res.send({ mensaje: "Ha habido un error" });
+      } else {
+        if (arrayUsuario.length > 0) {
+          if (bcrypt.compareSync(password,   arrayUsuario[0].password)) {
+            res.send({ mensaje: "Logueado correctamente" });
+          } else {
+            res.send({ mensaje: "Contraseña incorrecta" });
+          }
+        } else {
+          res.send({ mensaje: "El usuario no existe" });
+        }
+      }
+    });
+});
+
+ 
+
+
 
 
 module.exports = router;

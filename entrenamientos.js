@@ -32,17 +32,17 @@ router.post("/add", (req, res) => {
                 } else {
                     db.collection("activities")
                         .find({
-                            actividad: entrenamiento.activity
+                            actividad: entrenamiento.actividad
                         }).toArray((err, rutina) => {
                             if (err != null) {
                                 res.send(err);
                             } else {
                                 db.collection("entrenamientos").insertOne({
-                                    actividad: entrenamiento.activity,
+                                    actividad: entrenamiento.actividad,
                                     intensidad: entrenamiento.intensidad,
-                                    duracion: parseInt(entrenamiento.duration),
-                                    calorias: (entrenamiento.duration * rutina[0].intensidad[entrenamiento.intensidad][0].calorias) / 30,
-                                    pasos: (entrenamiento.duration * rutina[0].intensidad[entrenamiento.intensidad][0].pasos) / 30
+                                    duracion: parseInt(entrenamiento.duracion),
+                                    calorias:Math.trunc((entrenamiento.duracion * rutina[0].intensidad[entrenamiento.intensidad][0].calorias) / 30),
+                                    pasos :Math.trunc((entrenamiento.duracion * rutina[0].intensidad[entrenamiento.intensidad][0].pasos) / 30)
                                 }, ((err, datos) => {
                                     if (err != null) {
                                         res.send(err);

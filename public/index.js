@@ -67,6 +67,7 @@ fetch("/entrenamientos")
 /*        GET PASOS         */
 /************************************/
 let dataPasos = "";
+ let arrayPasos = [];
 
   fetch("/entrenamientos")
     .then(res => res.json())
@@ -74,14 +75,14 @@ let dataPasos = "";
       console.log(datos)
 
       for (let i = 0; i < datos.length; i++) {
-        dataPasos += `${datos[i].pasos}, `
+        arrayPasos.push((datos[i].pasos)) 
       
       }
 
       var options = {
       series: [{
         name: 'Pasos',
-        data: [7.5, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2]
+        data: arrayPasos
         //data: [ ]
       }],
       chart: {
@@ -96,26 +97,21 @@ let dataPasos = "";
         }
       },
         };
-      
-
-      let arrayPasos = options.series[0].data;
-      arrayPasos.push(dataPasos) 
-
+    
 
         var chart = new ApexCharts(document.getElementById("grafico-pasos"), options);
       chart.render();
-      
+
        
       
     })
-
+ 
         
 /************************************/
 /*        GET SUEÑO        */
 /************************************/
-let dataDormir = "";
+ let dataDormir = "";
 let arrayNuevo = [];
-//let arrayDormir = options.series[0].data;
 
   fetch("/dreams")
     .then(res => res.json())
@@ -123,14 +119,13 @@ let arrayNuevo = [];
       console.log(datos)
 
       for (let i = 0; i < datos.length; i++) {
-        dataDormir += `${datos[i].horasTotal}, `
-        arrayNuevo.push(dataDormir) 
+        arrayNuevo.push(datos[i].horasTotal) 
       }
+      console.log(arrayNuevo)
 
       var options = {
       series: [{
         name: 'Sueño',
-        //data: [7.5, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2]
         data: arrayNuevo,
       }],
       chart: {
@@ -149,9 +144,7 @@ let arrayNuevo = [];
       var chart = new ApexCharts(document.getElementById("grafico-dormir"), options);
       chart.render();  
     })
-
-
-
+ 
 /************************************/
 /*        POST ENTRENAMIENTO         */
 /************************************/
@@ -159,16 +152,18 @@ let arrayNuevo = [];
 /* POST ENTRENAMIENTO: Iniciar un entrenmiento  */
 function entrenaInit() {
 
-  const activity = document.getElementById("actividad").value;
-  const intensity = document.getElementById("intensidad").value;
-  const duration = document.getElementById("duracion").value;
+  const actividad = document.getElementById("actividad").value;
+  const intensidad = document.getElementById("intensidad").value;
+  const duracion = document.getElementById("duracion").value;
 
 
   const entrenamiento = {
-    activity,
+    actividad,
     intensidad,
-    duration
+    duracion
   };
+
+  console.log(entrenamiento)
 
 
   fetch("/entrenamientos/add", {
@@ -190,19 +185,28 @@ function entrenaInit() {
 /*        POST SEGUIMIENTO SUEÑO         */
 /************************************/
 
-function dormirInit() {
-  let diaInicio = document.getElementById("diaInicio").value;
-  let diaFin = document.getElementById("diaFin").value;
-  let horaInicio = document.getElementById("horaInicio").value;
-  let horaFin = document.getElementById("horaFin").value;
+  function devolverHoras(horaMinutos) {
+    return (parseInt(horaMinutos.split(":")[0])) + parseInt(horaMinutos.split(":")[1]);
+  }
 
+function dormirInit() {
+    let dayStart = document.getElementById("diaInicio").value;
+    let dayEnd = document.getElementById("diaFin").value;
+    let hourStart = devolverHoras(document.getElementById("horaInicio").value);
+    let hourEnd = devolverHoras(document.getElementById("horaFin").value);
+
+  let horasTotal = Math.abs((hourStart - hourEnd))
+  console.log(horasTotal)
 
   const dream = {
-    diaInicio,
-    diaFin,
-    horaInicio,
-    horaFin
+    dayStart,
+    dayEnd,
+    hourStart,
+    hourEnd,
+    horasTotal
   };
+
+  console.log(dream)
 
 
   fetch("/dreams/add", {
@@ -219,14 +223,17 @@ function dormirInit() {
 }
 
 
+
 /***********************************************/
 /*        GET RESUMEN ENTRENAMIENTOS     **    */
 /***********************************************/
 
- let listado = "";
+let listado = "";
+ 
+seguimiento();
 
 function seguimiento() {
-    fetch("/seguimiento")
+    fetch("/entrenamientos")
     .then(res => res.json())
     .then(datos => {
       console.log(datos)
@@ -237,15 +244,15 @@ function seguimiento() {
         `<div class="detalle-list-item">
             <div id="tiempo">
                 <i class="far fa-image"></i>
-                <p>${datos.duracion} Minutos</p>
+                <p>${datos[i].duracion} Minutos</p>
             </div>
             <div id="kilometros">
                 <i class="far fa-image"></i>
-                <p>${datos.calorias} Caloriaa</p>
+                <p>${datos[i].calorias} Caloriaa</p>
             </div>
             <div id="pasos">
                 <i class="far fa-image"></i>
-                 <p>${datos.paos} Pasos</p>
+                 <p>${datos[i].pasos} Pasos</p>
             </div>
           </div>
         `

@@ -1,5 +1,6 @@
 const express = require("express");
 const mongodb = require("mongodb");
+const bcrypt = require("bcrypt");
 const path = require("path");
 const app = express();
 const router = express.Router()

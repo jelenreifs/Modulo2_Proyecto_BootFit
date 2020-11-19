@@ -27,44 +27,22 @@ const dream = {
     diaFin: req.body.dayEnd,
     horaInicio: req.body.hourStart,
     horaFin: req.body.hourEnd,
-    horasTotal: (parseInt(req.body.hourEnd) - parseInt(req.body.hourStart))
-    //horasTotal: (parseInt(req.body.hourEnd) - parseInt(req.body.hourStart)) / (1000 * 60 * 60 * 24)
+    horasTotal: req.body.horasTotal
     }  
-
-    /* const calcula = {
-        horasTotal: (dream.horaFin - dream.horaInicio) / (1000 * 60 * 60 * 24)
-    } */
-
     
     let db = req.app.locals.db;
-    db.collection("users")
-        .find({ tfno: dormir.tfno }).toArray((err, user) => {
-            if (err != null) {
-                res.send(err)
-            } else {
-                if (user.length === 0) {
-                    res.send({ mensaje: "No hay usuario registrado" });
+        db.collection("dreams")
+            .insertOne(dream, (err, datos) => {
+                console.log(dream)
+                if (err != null) {
+                    res.send(err);
                 } else {
-                    db.collection("dreams")
-                        .insertOne(dream, (err, datos) => {
-                            console.log(dream)
-                            if (err != null) {
-                                res.send(err);
-                            } else {
-                                console.log(datos);
-                                res.send(datos);
-                            }
-                    }) //insertOne
+                    console.log(datos);
+                    res.send(datos);
                 }
-            }
-        }) // find  
+        }) //insertOne
     }); // POSt
    
-
-
-
-
-
 
 
 module.exports = router;
