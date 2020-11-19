@@ -80,9 +80,9 @@ let dataPasos = "";
 
       var options = {
       series: [{
-        name: 'Inflation',
-        // data: [7.5, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2]
-        data: [ ]
+        name: 'Pasos',
+        data: [7.5, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2]
+        //data: [ ]
       }],
       chart: {
         height: 240,
@@ -109,65 +109,47 @@ let dataPasos = "";
       
     })
 
- 
-
+        
 /************************************/
-/*        GET SUEÑO         */
+/*        GET SUEÑO        */
 /************************************/
-
 let dataDormir = "";
+let arrayNuevo = [];
+//let arrayDormir = options.series[0].data;
 
   fetch("/dreams")
     .then(res => res.json())
     .then(datos => {
       console.log(datos)
 
-    for (let i = 0; i < datos.length; i++) {
+      for (let i = 0; i < datos.length; i++) {
         dataDormir += `${datos[i].horasTotal}, `
-      
+        arrayNuevo.push(dataDormir) 
       }
 
       var options = {
-          series: [{
-            name: 'Sueño',
-           // data: [datos[0].horasTotal, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2]
-            data: [ ]
-          }],
-          chart: {
-            height: 240,
-            type: 'bar',
+      series: [{
+        name: 'Sueño',
+        //data: [7.5, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2]
+        data: arrayNuevo,
+      }],
+      chart: {
+        height: 240,
+        type: 'bar',
+      },
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            position: 'top', // top, center, bottom
           },
-          plotOptions: {
-            bar: {
-              dataLabels: {
-                position: 'top', // top, center, bottom
-              },
-            }
-          },
-      };
+        }
+      },
+        };
       
-      let arrayDormir = options.series[0].data;
-      arrayDormir.push(dataPasos) 
-
-
-
-        var chart = new ApexCharts(document.getElementById("grafico-dormir"), options);
-        chart.render();
-      
+      var chart = new ApexCharts(document.getElementById("grafico-dormir"), options);
+      chart.render();  
     })
 
-   
-/***********************************************/
-/*        GET RESUMEN ENTRENAMIENTOS     **    */
-/***********************************************/
-
-  fetch("/entrenamientos")
-    .then(res => res.json())
-    .then(datos => {
-      console.log(datos)
-      
-    })
- 
 
 
 /************************************/
@@ -208,11 +190,6 @@ function entrenaInit() {
 /*        POST SEGUIMIENTO SUEÑO         */
 /************************************/
 
-  
-
-
-
-
 function dormirInit() {
   let diaInicio = document.getElementById("diaInicio").value;
   let diaFin = document.getElementById("diaFin").value;
@@ -240,6 +217,46 @@ function dormirInit() {
       console.log(data);
     });
 }
+
+
+/***********************************************/
+/*        GET RESUMEN ENTRENAMIENTOS     **    */
+/***********************************************/
+
+ let listado = "";
+
+function seguimiento() {
+    fetch("/seguimiento")
+    .then(res => res.json())
+    .then(datos => {
+      console.log(datos)
+
+      for (let i = 0; i < datos.length; i++) {
+      
+      listado += 
+        `<div class="detalle-list-item">
+            <div id="tiempo">
+                <i class="far fa-image"></i>
+                <p>${datos.duracion} Minutos</p>
+            </div>
+            <div id="kilometros">
+                <i class="far fa-image"></i>
+                <p>${datos.calorias} Caloriaa</p>
+            </div>
+            <div id="pasos">
+                <i class="far fa-image"></i>
+                 <p>${datos.paos} Pasos</p>
+            </div>
+          </div>
+        `
+      }
+       document.getElementById("detalle-list").innerHTML = listado;
+      
+    })
+
+}
+ 
+
 
   
  
