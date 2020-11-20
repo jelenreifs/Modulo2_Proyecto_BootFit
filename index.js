@@ -1,7 +1,7 @@
 const express = require("express");
 const mongodb = require("mongodb");
-const bcrypt = require("bcrypt");
 const path = require("path");
+const bcrypt = require("bcrypt");
 const app = express();
 const router = express.Router()
 
@@ -9,7 +9,6 @@ let users = require("./users");
 let activities = require("./activities");
 let dreams = require("./dreams");
 let entrenamientos = require("./entrenamientos");
-//let seguimiento = require("./entrenamientos");
 
 
 app.use(express.static("public"));
@@ -25,6 +24,7 @@ MongoClient.connect("mongodb://127.0.0.1:27017", function (err, client) {
     if(err!==null) {
         console.log(err);
     } else {
+        db = client.db("BootFit");
         app.locals.db = client.db("BootFit");
     }
 });
@@ -39,9 +39,10 @@ app.get("/", (req, res) => {
     res.sendFile(path.resolve(__dirname, 'public/dashboard.html'))
 }); 
 
-/* let path1 = path.resolve(__dirname, "public/seguimiento.html"); 
-console.log(path1) 
- */
+app.get("/", (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'public/registro.html'))
+}); 
+
 
  router.get("/seguimiento", (req, res) => {
      res.sendFile(path.resolve(__dirname, 'public/seguimiento.html'))
@@ -55,7 +56,6 @@ console.log(path1)
         }
     });
  }); 
-
 
 
 

@@ -1,6 +1,86 @@
 
 /* GET ACTIVIDADES: Cargar dinámicamente las actividades en los selects  */
 
+let telefono;
+/************************************/
+/*          NUEVO REGISTRO          */
+/************************************/
+
+function nuevoRegistro() {
+
+  const tfno = document.getElementById("tfnoAdd").value;
+  const nombre = document.getElementById("nombreAdd").value;
+  const apellido = document.getElementById("apellidoAdd").value;
+  const password = document.getElementById("passwordAdd").value;
+   const objetivo = document.getElementById("objetivo").value;
+
+  const user = {
+    tfno,
+    nombre,
+    apellido,
+    objetivo,
+    password
+  };
+
+  console.log(login)
+
+  fetch("/users/add", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user),
+  })
+    .then(res => res.json)
+    .then(data => {
+      console.log(data);
+    });
+}
+
+
+ 
+/************************************/
+/*            LOGIN                */
+/************************************/
+
+function login() {
+
+  const tfno = document.getElementById("telefono").value;
+  const password = document.getElementById("password").value;
+
+  const login = {
+    tfno,
+    password,
+  };
+
+  console.log(login)
+
+  fetch("/users/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(login),
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      telefono = data.usuario[0].tfno
+      location.replace("dashboard.html")
+      
+      
+      
+    });
+}
+
+
+
+
+/**************************************************/
+/*        SELECTOR DE ACTIVIDADES DINAMICO       */
+/*************************************************/
+
+
 let actividad = document.getElementById("actividad")
 let actividadSelected = actividad.options[actividad.selectedIndex].value;
 
@@ -15,6 +95,8 @@ fetch("/activities")
     }
     document.getElementById("actividad").innerHTML = optionsActividad;
   })
+
+
 
 
 /************************************/
@@ -144,27 +226,26 @@ let arrayNuevo = [];
       var chart = new ApexCharts(document.getElementById("grafico-dormir"), options);
       chart.render();  
     })
+
+
+/************************************/
+/*        POST ENTRENAMIENTO      */
+/************************************/
+
+ function entrenaInit() {
+    let actividad = document.getElementById("actividad").value;
+    let intensidad = document.getElementById("intensidad").value;
+    let duracion = document.getElementById("duracion").value;
  
-/************************************/
-/*        POST ENTRENAMIENTO         */
-/************************************/
 
-/* POST ENTRENAMIENTO: Iniciar un entrenmiento  */
-function entrenaInit() {
-
-  const actividad = document.getElementById("actividad").value;
-  const intensidad = document.getElementById("intensidad").value;
-  const duracion = document.getElementById("duracion").value;
-
-
-  const entrenamiento = {
+   const entrenamiento = {
+    tfno,
     actividad,
     intensidad,
-    duracion
-  };
-
-  console.log(entrenamiento)
-
+    duracion 
+   };
+   
+   console.log(entrenamiento)
 
   fetch("/entrenamientos/add", {
     method: "POST",
@@ -173,13 +254,13 @@ function entrenaInit() {
     },
     body: JSON.stringify(entrenamiento),
   })
-    .then(res => res.json)
+    .then(res => res.json())
     .then(data => {
       console.log(data);
     });
 }
 
-
+ 
 
 /************************************/
 /*        POST SEGUIMIENTO SUEÑO         */
@@ -193,9 +274,9 @@ function dormirInit() {
     let dayStart = document.getElementById("diaInicio").value;
     let dayEnd = document.getElementById("diaFin").value;
     let hourStart = devolverHoras(document.getElementById("horaInicio").value);
-    let hourEnd = devolverHoras(document.getElementById("horaFin").value);
-
-  let horasTotal = Math.abs((hourStart - hourEnd))
+    let hourEnd = devolverHoras(document.getElementById("horaFin").value); 
+  
+   let horasTotal = Math.abs((hourStart - hourEnd))
   console.log(horasTotal)
 
   const dream = {
@@ -205,9 +286,6 @@ function dormirInit() {
     hourEnd,
     horasTotal
   };
-
-  console.log(dream)
-
 
   fetch("/dreams/add", {
     method: "POST",
@@ -222,50 +300,7 @@ function dormirInit() {
     });
 }
 
-
-
-/***********************************************/
-/*        GET RESUMEN ENTRENAMIENTOS     **    */
-/***********************************************/
-
-let listado = "";
  
-seguimiento();
-
-function seguimiento() {
-    fetch("/entrenamientos")
-    .then(res => res.json())
-    .then(datos => {
-      console.log(datos)
-
-      for (let i = 0; i < datos.length; i++) {
-      
-      listado += 
-        `<div class="detalle-list-item">
-            <div id="tiempo">
-                <i class="far fa-image"></i>
-                <p>${datos[i].duracion} Minutos</p>
-            </div>
-            <div id="kilometros">
-                <i class="far fa-image"></i>
-                <p>${datos[i].calorias} Caloriaa</p>
-            </div>
-            <div id="pasos">
-                <i class="far fa-image"></i>
-                 <p>${datos[i].pasos} Pasos</p>
-            </div>
-          </div>
-        `
-      }
-       document.getElementById("detalle-list").innerHTML = listado;
-      
-    })
-
-}
- 
-
-
-  
  
 
 

@@ -20,14 +20,23 @@ router.get("/", (req, res) => {
 /* AÑADIR UNA ACTIVIDAD A LA COLECCIÓN */
 router.post("/add", (req, res) => {
 
-const activity = {
+    const activity = {
+    actividad: req.body.actividad,
+    intensidad: req.body.intensidad,
+    calorias: parseInt(req.body.calorias),
+    pasos: parseInt(req.body.pasos),
+    duracion: parseInt(req.body.duracion)
+    } 
+
+
+/* const activity = {
     actividad: req.body.activity,
     intensidad: req.body.intensity,
     calorias: parseInt(req.body.calories),
     pasos: parseInt(req.body.steps),
     duracion: parseInt(req.body.duration)
     } 
-
+ */
     console.log(activity);
     
     console.log(req.body)

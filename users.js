@@ -1,8 +1,11 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
 const router = express.Router()
 
+/*******************************************/
+/*              GET USUARIOS              */
+/******************************************/
 
-/* TODA LA COLECCIÓN DE USUARIOS */
 router.get("/", (req, res) => {
     let db = req.app.locals.db;
     db.collection("users")
@@ -17,34 +20,11 @@ router.get("/", (req, res) => {
 }); 
 
 
+/*******************************************/
+/*          REGISTRO: POST USER           */
+/******************************************/
 
-/* AÑADIR USUARIO A LA COLECCIÓN */
-router.post("/add", (req, res) => {
-const user = {
-    tfno: req.body.tfno,
-    nombre: req.body.nombre,
-    apellido: req.body.apellido,
-    objetivo: req.body.objetivo
-    
-}  
-    
-    let db = req.app.locals.db;
-    db.collection("users")
-    .insertOne(user, (err, datos) => {
-        if (err != null) {
-            console.log(err);
-            res.send(err);
-        } else {
-            console.log(datos);
-            res.send(datos);
-        }
-    });
-});
-
-
-
-/* AÑADIR USUARIO AL REGISTRO */
-router.post("/registro", function(req, res) {
+router.post("/add", function(req, res) {
     let tfno = req.body.tfno;
     let password = req.body.password;
     let contraseinaCifrada = bcrypt.hashSync( password, 10 );
@@ -64,22 +44,25 @@ router.post("/registro", function(req, res) {
 })
 
 
+/*******************************************/
+/*               LOGIN            */
+/******************************************/
 
-/* PARA EL LOGIN */
-router.post("/login", function (req, res) {
+router.post("/login", function (req,res) {
     let tfno = req.body.tfno;
     let password = req.body.password;
 
     let db = req.app.locals.db;
   db.collection("users")
     .find({ tfno: tfno })
-    .toArray(function (err, arrayUsuario) {
+    .toArray(function (err,arrayUsuario) {
       if (err !== null) {
         res.send({ mensaje: "Ha habido un error" });
       } else {
-        if (arrayUsuario.length > 0) {
-          if (bcrypt.compareSync(password,   arrayUsuario[0].password)) {
-            res.send({ mensaje: "Logueado correctamente" });
+        if (arrayUsuario.length > 0) { 
+          if (bcrypt.compareSync(password,arrayUsuario[0].password)) {
+            res.send({ mensaje: "Logueado correctamente" , usuario: arrayUsuario});
+
           } else {
             res.send({ mensaje: "Contraseña incorrecta" });
           }
@@ -89,6 +72,7 @@ router.post("/login", function (req, res) {
       }
     });
 });
+
 
  
 

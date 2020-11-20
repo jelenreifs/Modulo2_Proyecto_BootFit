@@ -17,6 +17,19 @@ h5 {
   margin-bottom: 0.65em;
 }
 
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .logo {
+  width: 20%;
+  margin: 0;
+  margin-left: 3em;
+  height: 20%;
+}
+
 /* Generales */
 .inline {
   display: flex;
@@ -53,7 +66,7 @@ h5 {
 
 #menuToggle #hamburguer {
   position: absolute;
-  top: -30px;
+  top: -20px;
   left: -20px;
 }
 
@@ -121,7 +134,7 @@ h5 {
 
 #menu .menu-section {
   border-bottom: 1px solid #ccc;
-  margin: 1em 0;
+  margin: 1.5em 0;
 }
 
 /* FORMULARIO */
@@ -206,16 +219,15 @@ main {
   display: flex;
   list-style-type: none;
   justify-content: right;
-  padding: 0 1.5em;
 }
 
 .content-wrapper .menu-content a {
   color: fff;
-  padding: 1em;
+  padding: 0.6em 1em;
 }
 
 .content-wrapper .menu-content a:hover {
-  background-color: #666;
+  background-color: #d33f8d;
 }
 
 .section-resumen {
@@ -271,14 +283,14 @@ main {
 
 .detalle-list {
   margin-top: 3em;
-  padding-top: 1.2em;
-  border-top: 1px solid #666;
-  border-bottom: 1px solid #666;
 }
 
 .detalle-list-item {
   display: flex;
   justify-content: space-between;
+  padding: 0.85em 0;
+  border-top: 1px solid #666;
+  border-bottom: 1px solid #666;
 }
 
 .detalle-list-item div {
@@ -287,11 +299,60 @@ main {
   align-items: center;
 }
 
-.detalle-list-item div p {
-  margin-top: 0.5em;
+.menu-content-item {
+  text-decoration: none;
+  color: #fff;
+}
+
+a[class~="volver-ico"] {
+  margin-right: 0.8em;
+}
+
+.detalle-list-item .tiempo,
+.detalle-list-item .kilometros,
+.detalle-list-item .pasos {
+  display: flex;
+  flex-direction: column;
+}
+
+.detalle-list-item p {
+  margin: 0 !important;
+  font-weight: 200;
+}
+
+.detalle-list-item .list-item-dato {
+  font-size: 1.5em;
+  margin: 0;
+  font-weight: 400;
+}
+
+.detalle-list-item i {
+  margin-bottom: 0.5em;
+}
+
+.detalle-list-item .tiempo i {
+  color: #6fb4b4;
+}
+
+.detalle-list-item .kilometros i {
+  color: #a64560;
+}
+
+.detalle-list-item .pasos i {
+  color: #4359a1;
 }
 
 /* LOGIN */
+a.registro {
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5em 1em;
+  margin-top: 1em;
+}
+
+a.registro:hover {
+  color: #d33f8d;
+}
 
 .login {
   width: 100vw;
